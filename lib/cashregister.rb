@@ -1,0 +1,2 @@
+class Cashregister
+end
