@@ -35,30 +35,37 @@ describe CashRegister do
     let(:coins) { [25,10,5,1] }
     let(:amount) { 123 }
 
-    it { should eq({'25' => 4, '10' => 2, '5' => 0, '1' => 3}) }
+    it { should eq({25 => 4, 10 => 2, 5 => 0, 1 => 3}) }
 
     context 'crazy foreign coins' do
       let(:coins) { [10,7,1] }
       let(:amount) { 14 }
 
-      it { should eq({'10' => 0, '7' => 2, '1' => 0}) }
+      it { should eq({10 => 0, 7 => 2, 1 => 0}) }
+    end
+
+    context 'can\'t make change' do
+      let(:coins) { [2] }
+      let(:amount) { 3 }
+
+      it { should be_nil }
     end
 
     context 'memoized zero case' do
       let(:amount) { 0 }
 
-      it { should eq({'25' => 0, '10' => 0, '5' => 0, '1' => 0}) }
+      it { should eq({25 => 0, 10 => 0, 5 => 0, 1 => 0}) }
     end
 
     context 'memoized base case' do
       let(:amount) { 5 }
 
-      it { should eq({'25' => 0, '10' => 0, '5' => 1, '1' => 0}) }
+      it { should eq({25 => 0, 10 => 0, 5 => 1, 1 => 0}) }
     end
     context 'memoized base case' do
       let(:amount) { 6 }
 
-      it { should eq({'25' => 0, '10' => 0, '5' => 1, '1' => 1}) }
+      it { should eq({25 => 0, 10 => 0, 5 => 1, 1 => 1}) }
     end
  end
 end
@@ -72,12 +79,12 @@ describe Change do
     it 'should instantiate' do
       expect { change }.to_not raise_exception
     end
-    it { should eq({'25' => 0, '10' => 0, '5' => 0, '1' => 0}) }
+    it { should eq({25 => 0, 10 => 0, 5 => 0, 1 => 0}) }
   end
 
   describe '.add' do
     it 'adds coins to the Hash' do
-      change.add(25).should eq({'25' => 1, '10' => 0, '5' => 0, '1' => 0})
+      change.add(25).should eq({25 => 1, 10 => 0, 5 => 0, 1 => 0})
     end
   end
 
